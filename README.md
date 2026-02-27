@@ -323,11 +323,14 @@ return (
 
 ```tsx
 // ❌ Conditional rendering — destroys state on unmount
-{isActive && <Counter />}
+{show && <Component />}
 
 // ✅ <Activity> — keeps state alive when hidden
-<Activity mode={isActive ? "visible" : "hidden"}>
-  <Counter />
+// - hides the component but keeps it mounted → state and async data are preserved
+// - can fetch data while hidden (unlike conditional rendering)
+// - non-blocking → UI remains interactive even when children are hidden
+<Activity mode={show ? "visible" : "hidden"}>
+  <Component />
 </Activity>
 ```
 
