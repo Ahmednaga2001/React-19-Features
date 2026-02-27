@@ -311,7 +311,7 @@ return (
 
 ### What it does
 
-`<Activity>` hides and shows parts of the UI while **preserving their internal state**. When `mode="hidden"`, React removes the subtree from the visible DOM but keeps all state (`useState`, `useRef`, context, etc.) alive in memory.
+`<Activity>` lets you **hide a component without unmounting it**. When `mode="hidden"`, the component disappears from the screen but stays alive in memory — so `useState`, `useRef`, and any fetched data are all kept exactly as they were.
 
 ### Props
 
