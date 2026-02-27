@@ -12,6 +12,7 @@ A reference guide for all hooks demonstrated in this folder.
 4. [`useDeferredValue`](#4-usedeferredvalue)
 5. [`useFormStatus`](#5-useformstatus)
 6. [`useFormState`](#6-useformstate)
+7. [`<Activity>`](#7-activity)
 
 ---
 
@@ -304,13 +305,64 @@ return (
 
 ---
 
+## 7. `<Activity>`
+
+**File:** `activity-component.tsx`
+
+### What it does
+
+`<Activity>` hides and shows parts of the UI while **preserving their internal state**. When `mode="hidden"`, React removes the subtree from the visible DOM but keeps all state (`useState`, `useRef`, context, etc.) alive in memory.
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `mode` | `"visible" \| "hidden"` | `"visible"` renders children normally; `"hidden"` hides them while keeping state alive |
+
+### Key difference from conditional rendering
+
+```tsx
+// ❌ Conditional rendering — destroys state on unmount
+{isActive && <Counter />}
+
+// ✅ <Activity> — keeps state alive when hidden
+<Activity mode={isActive ? "visible" : "hidden"}>
+  <Counter />
+</Activity>
+```
+
+### When to use
+
+- **Tab panels** — keep background tabs alive so the user returns to the same state
+- **Multi-step wizards** — preserve form input while navigating between steps
+- **Offscreen pre-rendering** — warm up a route before the user navigates to it
+
+### Example (this project)
+
+```tsx
+const [show, setShow] = useState(true);
+
+<button onClick={() => setShow(v => !v)}>
+  {show ? "Hide" : "Show"}
+</button>
+
+<Activity mode={show ? "visible" : "hidden"}>
+  <Counter /> {/* counter value is preserved even while hidden */}
+</Activity>
+```
+
+> Toggle the button repeatedly — the counter keeps its value while hidden, unlike `{show && <Counter />}` which resets to 0 every time it re-mounts.
+
+---
+
 ## Quick Comparison
 
-| Hook | React package | Purpose |
-|------|--------------|---------|
+| Hook / Component | React package | Purpose |
+|-----------------|--------------|---------|
 | `use` | `react` | Unwrap a Promise or Context inside render |
 | `useOptimistic` | `react` | Show instant UI update, auto-rollback on failure |
 | `useTransition` | `react` | Mark updates as low-priority, keep UI responsive |
 | `useDeferredValue` | `react` | Defer a value to avoid blocking urgent renders |
 | `useFormStatus` | `react-dom` | Read parent form's pending/data state in a child |
 | `useFormState` | `react-dom` | Manage form action result as state |
+| `<Activity>` | `react` | Hide UI subtree while preserving its internal state |

@@ -9,6 +9,7 @@ import UseTransitionPage from "./app/use-transition/page.tsx";
 import UseDeferredValuePage from "./app/use-deferred-value/page.tsx";
 import UseOptimisticPage from "./app/use-optimistic/page.tsx";
 import UseFormPage from "./app/use-form/page.tsx";
+import ActivityPage from "./app/activity/page.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="use-deferred-value" element={<UseDeferredValuePage />} />
           <Route path="use-optimistic" element={<UseOptimisticPage />} />
           <Route path="use-form" element={<UseFormPage />} />
+          <Route path="activity" element={<ActivityPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

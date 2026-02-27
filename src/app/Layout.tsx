@@ -17,6 +17,7 @@ const navItems = [
   { to: "/use-deferred-value", label: "useDeferredValue" },
   { to: "/use-optimistic", label: "useOptimistic" },
   { to: "/use-form", label: "useFormStatus / useFormState" },
+  { to: "/activity", label: "<Activity>" },
 ];
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
